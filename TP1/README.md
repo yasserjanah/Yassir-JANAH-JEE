@@ -46,7 +46,7 @@
   - create new Dao implementation decorated `@Component`.
       <br>
   <img src="screenshoots/new-dao-impl-with-component.png">
-  - create new Metier implementation decorated `@Component`.
+  - - create new Metier implementation decorated `@Component`.
       <br>
   <img src="screenshoots/metier-class-component.png">
   - create class that will be used to inject the dependencies.
