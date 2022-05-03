@@ -27,9 +27,9 @@
   <img src="screenshoots/static-di.png">
   
 - 5.2 Dynamic Injection:
-    - create a config file.
+- - create a config file.
   <img src="screenshoots/config-file.png">
-    - create a class that will be used to inject the dependencies.
+- - create a class that will be used to inject the dependencies.
   <img src="screenshoots/dynamic-di.png">
   
 - 5.3 Using the Spring Framework:
