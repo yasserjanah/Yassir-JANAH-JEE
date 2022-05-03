@@ -34,10 +34,10 @@
 
 ##### 5.3 Using the Spring Framework:
   ##### 5.3.1 XML Version:
-    - create `applicationContext.xml` file.
+  - create `applicationContext.xml` file.
     <img src="screenshoots/applicationContext.png">
 
-    - create a class that will be used to inject the dependencies.
+  - create a class that will be used to inject the dependencies.
     <img src="screenshoots/spring-xml-version.png">
 
 ##### 5.3.2 Annotation Version:
