@@ -35,15 +35,21 @@
 - 5.3 Using the Spring Framework:
   - 5.3.1 XML Version:
    - create `applicationContext.xml` file.
+       <br>
     <img src="screenshoots/applicationContext.png">
+    <br>
    - create a class that will be used to inject the dependencies.
+   <br>
     <img src="screenshoots/spring-xml-version.png">
     
   - 5.3.2 Annotation Version:
   - create new Dao implementation decorated `@Component`.
+      <br>
   <img src="screenshoots/new-dao-impl-with-component.png">
   - create new Metier implementation decorated `@Component`.
+      <br>
   <img src="screenshoots/metier-class-component.png">
   - create class that will be used to inject the dependencies.
+      <br>
   <img src="screenshoots/pres-annotations.png">
   
