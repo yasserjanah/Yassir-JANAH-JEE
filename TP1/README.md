@@ -4,8 +4,8 @@
     - static injection.
     - dynamic injection.
     - using the Spring Framework:
-        - XML Version
-        - Annotation Version
+     - XML Version
+     - Annotation Version
 ---
 
 #### 1. create IDAO interface
@@ -46,7 +46,8 @@
   - create new Dao implementation decorated `@Component`.
       <br>
   <img src="screenshoots/new-dao-impl-with-component.png">
-  - - create new Metier implementation decorated `@Component`.
+  <br>
+  - create new Metier implementation decorated `@Component`.
       <br>
   <img src="screenshoots/metier-class-component.png">
   - create class that will be used to inject the dependencies.
