@@ -29,6 +29,7 @@
 ##### 5.2 Dynamic Injection:
   - create a config file.
   <img src="screenshoots/config-file.png" alt="config file">
+  
   - create a class that will be used to inject the dependencies.
   <img src="screenshoots/dynamic-di.png">
 
