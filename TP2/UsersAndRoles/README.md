@@ -10,6 +10,7 @@
 <br>
 <img src="screenshots/User.png">
 <br>
+
 - **Role**:
   - **id**: `int`
   - **roleName**: `String`
