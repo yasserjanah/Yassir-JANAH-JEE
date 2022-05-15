@@ -1,0 +1,49 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="baseTemplate">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${patient.id == null ? 'Add new Patient' : 'Edit Patient'}"></title>
+</head>
+<body>
+<!-- Main Content -->
+    <section class="relative pt-16" layout:fragment="content">
+        <div class="container mx-auto flex justify-center">
+            <form class="w-2/3" th:action="@{/admin/save(search=${search}, page=${page})}" method="POST">
+                <h1 class="text-center text-2xl mb-6 text-gray-600 font-bold font-sans"
+                    th:text="${patient.id == null ? 'Add new Patient' : 'Edit Patient'}"></h1>
+                <div th:if="${patient.id != null}">
+                    <input type="hidden" name="id" th:value="${patient.id}">
+                </div>
+                <div>
+                    <label class="text-gray-800 font-semibold block my-3 text-md" for="nom">Nom</label>
+                    <input class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="text" name="nom" id="nom"
+                           placeholder="Patient nom" th:value="${patient.nom}" />
+                    <span class="text-red-500 text-xs italic" th:errors="${patient.nom}"></span>
+                </div>
+                <div>
+                    <label class="text-gray-800 font-semibold block my-3 text-md" for="dateNaissance">date Naissance</label>
+                    <input class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="date" name="dateNaissance" id="dateNaissance"
+                           placeholder="Patient date Naissance" th:value="${patient.dateNaissance}"/>
+                    <span class="text-red-500 text-xs italic" th:errors="${patient.dateNaissance}"></span>
+                </div>
+                <div>
+                    <label class="text-gray-800 font-semibold block my-3 text-md" for="malade">Malade</label>
+                    <input class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none"
+                           type="checkbox" name="malade" id="malade" th:checked="${patient.malade}"/>
+                    <span class="text-red-500 text-xs italic" th:errors="${patient.malade}"></span>
+                </div>
+                <div>
+                    <label class="text-gray-800 font-semibold block my-3 text-md" for="score">Score</label>
+                    <input class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="number" name="score" id="score"
+                           placeholder="0" th:value="${patient.score}" />
+                    <span class="text-red-500 text-xs italic" th:errors="${patient.score}"></span>
+                </div>
+                <button type="submit" class="w-80 mt-6 bg-teal-600 rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans"
+                        th:text="${patient.id == null ? 'Create' : 'Update'}"></button>
+            </form>
+        </div>
+    </section>
+    <!-- End Main Content -->
+
+</body>
+</html>

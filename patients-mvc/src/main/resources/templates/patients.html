@@ -1,0 +1,111 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="baseTemplate"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Patients List</title>
+</head>
+<body>
+<!-- Main Content -->
+    <section class="relative pt-16" layout:fragment="content">
+        <div class="w-full mb-12 px-4">
+            <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded
+  bg-grey-500 text-white">
+                <div class="rounded-t mb-0 px-4 py-3 border border-t-2 border-l-2 border-r-2 border-teal-500">
+                    <div class="flex flex-wrap items-center">
+                        <div class="relative w-full px-4 max-w-full flex-grow flex-1 ">
+                            <h1 class="font-bold text-xl text-teal-500 text-center">Patients List</h1>
+                        </div>
+                        <div class="w-full px-4 max-w-full flex-grow flex-1 ">
+                            <div class="relative">
+                                <form method="GET" th:action="@{/user/index}">
+                                    <input type="text" name="search" th:value="${search}" class="p-2 pl-8 rounded border border-gray-200 bg-gray-100 text-black focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent" placeholder="search patient..." />
+                                    <svg class="w-5 h-5 absolute left-2.5 top-6 text-teal-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                    <button class="text-center text-sm rounded-full px-4 py-2 mt-4 mb-2 text-white bg-teal-500 border-0 shadow-lg hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-teal-600" type="submit">
+                                        Search
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block w-full overflow-x-auto ">
+                    <table class="items-center w-full bg-transparent border-collapse">
+                        <thead>
+                        <tr>
+                            <th class="px-6 align-middle py-3 text-xs uppercase whitespace-nowrap font-bold text-left bg-teal-800 text-white-500">#</th>
+                            <th class="px-6 align-middle py-3 text-xs uppercase whitespace-nowrap font-bold text-left bg-teal-800 text-white-500">Nom</th>
+                            <th class="px-6 align-middle py-3 text-xs uppercase whitespace-nowrap font-bold text-left bg-teal-800 text-white-500">Data de Naissance</th>
+                            <th class="px-6 align-middle py-3 text-xs uppercase whitespace-nowrap font-bold text-left bg-teal-800 text-white-500">Malade</th>
+                            <th class="px-6 align-middle py-3 text-xs uppercase whitespace-nowrap font-bold text-left bg-teal-800 text-white-500">Score</th>
+                            <th sec:authorize="hasAuthority('ADMIN')" class="px-6 align-middle py-3 text-xs uppercase whitespace-nowrap font-bold text-left bg-teal-800 text-white-500"></th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:each="patient : ${patientsList}">
+                                <td class="px-6 align-middle py-3 text-xs uppercase  whitespace-nowrap font-semibold text-left text-gray-500" th:text="${patient.id}"></td>
+                                <td class="px-6 align-middle py-3 text-xs uppercase  whitespace-nowrap font-semibold text-left text-gray-500" th:text="${patient.nom}"></td>
+                                <td class="px-6 align-middle py-3 text-xs uppercase  whitespace-nowrap font-semibold text-left text-gray-500" th:text="${patient.dateNaissance}"></td>
+                                <td class="px-6 align-middle py-3 text-xs uppercase  whitespace-nowrap font-semibold text-left text-gray-500" th:text="${patient.malade}"></td>
+                                <td class="px-6 align-middle py-3 text-xs uppercase  whitespace-nowrap font-semibold text-left text-gray-500" th:text="${patient.score}"></td>
+                                <td sec:authorize="hasAuthority('ADMIN')" class="px-6 align-middle py-3 text-xs uppercase  whitespace-nowrap font-semibold text-left text-gray-500">
+                                    <!-- edit button -->
+                                    <a class="text-center text-sm rounded-full px-4 py-2 mt-4 mb-2 text-white bg-gray-300 border-1 shadow-lg hover:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-teal-600"
+                                       th:href="@{/admin/edit(id=${patient.id}, search=${search}, page=${currentPage})}">
+                                        Edit
+                                    </a>
+                                    <!-- delete button -->
+                                    <a class="text-center text-sm rounded-full ml-2 px-4 py-2 mt-4 mb-2 text-white bg-red-500 border-0 shadow-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600"
+                                       onclick="return confirm('Are you sure you want to delete this patient?')"
+                                       th:href="@{/admin/delete(id=${patient.id}, search=${search}, page=${currentPage})}">
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        <tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center">
+                    <div class="flex items-start justify-center px-4 py-3 bg-white border-t border-gray-200 sm:px-6">
+                        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                            <div>
+                                <nav class="relative z-0 inline-flex shadow-sm">
+                                    <a th:disabled="${!hasPrev}" th:href="@{index(page=${hasPrev? currentPage - 1 : 0}, search=${search})}"
+                                       class="relative inline-flex items-center px-2 py-2 text-sm font-medium leading-5 text-gray-500 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-l-md hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500"
+                                       aria-label="Previous">
+                                        <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                                  clip-rule="evenodd" />
+                                        </svg>
+                                    </a>
+                                    <a th:each="page, status : ${patientsAllPages}" th:text="${status.index}" th:class="${status.index == currentPage?
+                                        'relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium leading-5 text-gray-700 transition duration-150 ease-in-out bg-teal-500 border border-gray-300 hover:text-white focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 bg-teal-500' :
+                                        'relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium leading-5 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 hover:text-teal-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700'}"
+                                    th:href="@{index(page=${status.index}, search=${search})}"></a>
+                                    <a th:disabled="${!hasNext}" th:href="@{index(page=${hasNext? currentPage + 1 : currentPage}, search=${search})}"
+                                       class="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium leading-5 text-gray-500 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-r-md hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500"
+                                       aria-label="Next">
+                                        <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                                  clip-rule="evenodd" />
+                                        </svg>
+                                    </a>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Main Content -->
+
+</body>
+</html>
