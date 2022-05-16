@@ -1,0 +1,147 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="base"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Students List</title>
+</head>
+<body>
+
+    <main class="container mx-auto px-4 py-8 mt-8" layout:fragment="content">
+        <div class="rounded-t mb-0 py-3 border-white-500">
+            <div class="flex flex-wrap items-center">
+                <div class="w-full text-center">
+                    <div class="relative">
+                        <form method="GET" th:action="@{/students}" class="flex items-center text-center">
+                            <input type="text" name="search" th:value="${search}" class="w-2/5 p-2 pl-8 rounded border border-gray-200 bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" placeholder="Search student..." />
+                            <svg style="left: 8px;" class="w-5 h-5 absolute text-purple-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                            <button class="ml-2 text-center px-4 py-2 text-md font-bold text-white uppercase transition-all duration-150 bg-purple-500 rounded shadow outline-none hover:bg-purple-800 hover:shadow-md focus:outline-none ease" type="submit">
+                                Search
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block w-full overflow-x-auto ">
+            <table class="items-center w-full bg-white border-collapse">
+                <thead>
+                <tr>
+                    <th class="px-6 align-middle py-3 text-xs uppercase whitespace-nowrap font-bold text-left bg-purple-800 text-white">#</th>
+                    <th class="px-6 align-middle py-3 text-xs uppercase whitespace-nowrap font-bold text-left bg-purple-800 text-white">First Name</th>
+                    <th class="px-6 align-middle py-3 text-xs uppercase whitespace-nowrap font-bold text-left bg-purple-800 text-white">Last Name</th>
+                    <th class="px-6 align-middle py-3 text-xs uppercase whitespace-nowrap font-bold text-left bg-purple-800 text-white">Email</th>
+                    <th class="px-6 align-middle py-3 text-xs uppercase whitespace-nowrap font-bold text-left bg-purple-800 text-white">Date de Naissance</th>
+                    <th class="px-6 align-middle py-3 text-xs uppercase whitespace-nowrap font-bold text-left bg-purple-800 text-white">Gender</th>
+                    <th class="px-6 align-middle py-3 text-xs uppercase whitespace-nowrap font-bold text-left bg-purple-800 text-white">En Regle</th>
+                    <th class="px-6 align-middle py-3 text-xs uppercase whitespace-nowrap font-bold text-left bg-purple-800 text-white"></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="student, status : ${studentsList}">
+                    <td class="px-6 align-middle py-3 text-xs whitespace-nowrap font-semibold text-left text-gray-500" th:text="${status.count}"></td>
+                    <td class="px-6 align-middle py-3 text-xs whitespace-nowrap font-semibold text-left text-gray-500" th:text="${student.firstName}"></td>
+                    <td class="px-6 align-middle py-3 text-xs whitespace-nowrap font-semibold text-left text-gray-500" th:text="${student.lastName}"></td>
+                    <td class="px-6 align-middle py-3 text-xs whitespace-nowrap font-semibold text-left text-gray-500" th:text="${student.email}"></td>
+                    <td class="px-6 align-middle py-3 text-xs whitespace-nowrap font-semibold text-left text-gray-500" th:text="${student.dateOfBirth}"></td>
+                    <td class="px-6 align-middle py-3 text-xs whitespace-nowrap font-semibold text-left text-gray-500">
+                        <svg th:if="${student.gender.ordinal()==0}" xmlns="http://www.w3.org/2000/svg" fill="pink" width="26" height="24" viewBox="0 0 26 24"><path d="M17.5 12.5c0 .828-.56 1.5-1.25 1.5s-1.25-.672-1.25-1.5.56-1.5 1.25-1.5 1.25.672 1.25 1.5zm-7.75-1.5c-.69 0-1.25.672-1.25 1.5s.56 1.5 1.25 1.5 1.25-.672 1.25-1.5-.56-1.5-1.25-1.5zm3.25 8.354c2.235 0 3-2.354 3-2.354h-6s.847 2.354 3 2.354zm13 3.639c-2.653 1.714-5.418 1.254-6.842-1.488-1.672 1.505-3.706 2.487-6.158 2.487-2.53 0-4.517-.91-6.184-2.445-1.431 2.702-4.178 3.15-6.816 1.446 4.375-1.75-2.729-11.813 4.104-19.375 2.282-2.525 5.472-3.618 8.896-3.618s6.614 1.093 8.896 3.618c6.833 7.562-.271 17.625 4.104 19.375zm-5.668-6.111c.122-.202.312-.354.535-.43 2.447-.828 2.554-4.361 1.554-5.012-.235-.152-.531-.115-.672-.053-.664.295-1.406-.194-1.406-.914 0-.471-.034-1.001-.096-1.473h-10.101c-.813-1.021-.771-2.945-.396-4.57-.903.982-1.693 3.249-1.875 4.57h-2.121c-.062.472-.096 1.002-.096 1.473 0 .72-.742 1.209-1.406.914-.141-.062-.436-.1-.672.053-1 .651-.893 4.184 1.554 5.012.224.076.413.228.535.43 1.709 2.829 4.015 5.111 7.332 5.111 3.316 0 5.623-2.283 7.331-5.111z"/></svg>
+                        <svg th:if="${student.gender.ordinal()==1}" xmlns="http://www.w3.org/2000/svg" fill="blue" width="24" height="26" viewBox="0 0 24 26"><path d="M16.5 14.5c0 .828-.56 1.5-1.25 1.5s-1.25-.672-1.25-1.5.56-1.5 1.25-1.5 1.25.672 1.25 1.5zm-7.75-1.5c-.69 0-1.25.672-1.25 1.5s.56 1.5 1.25 1.5 1.25-.672 1.25-1.5-.56-1.5-1.25-1.5zm3.25 8.354c2.235 0 3-2.354 3-2.354h-6s.847 2.354 3 2.354zm12-6.041c0 1.765-.985 3.991-3.138 4.906-2.025 3.233-4.824 5.781-8.862 5.781-3.826 0-6.837-2.548-8.862-5.781-2.153-.916-3.138-3.142-3.138-4.906 0-2.053.862-3.8 2.71-3.964.852-9.099 8.57-8.408 9.837-10.849.323.559.477 1.571-.02 2.286.873-.045 2.344-1.304 2.755-2.552.754.366 1.033 1.577.656 2.354.542-.103 2.187-1.15 3.062-2.588.688 1.563.026 3.563-.708 4.771l-.012.001c1.796 1.707 2.781 4.129 3.01 6.576 1.859.165 2.71 1.917 2.71 3.965zm-2.58-1.866c-.235-.152-.531-.115-.672-.053-.56.25-1.214-.062-1.372-.66l-.001.016c-.333-2.604-1.125-4.854-2.611-5.565-6.427 7.009-10.82-.914-11.94 3.529-.101.582-.166 1.172-.166 1.766 0 .719-.743 1.209-1.406.914-.14-.062-.437-.1-.672.053-1 .651-.894 4.184 1.554 5.012.224.076.413.228.535.43 2.447 4.053 5.225 5.111 7.331 5.111 3.288 0 5.615-2.269 7.332-5.111.122-.202.312-.354.535-.43 2.447-.828 2.553-4.361 1.553-5.012z"/></svg>
+                    </td>
+                    <td class="px-6 align-middle py-3 text-xs whitespace-nowrap font-semibold text-left text-gray-500">
+                        <svg th:if="${student.enRegle}" xmlns="http://www.w3.org/2000/svg" fill="green" width="24" height="24" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>
+                        <svg th:if="!${student.enRegle}" xmlns="http://www.w3.org/2000/svg" fill="red" width="24" height="24" viewBox="0 0 24 24"><path d="M23 20.168l-8.185-8.187 8.185-8.174-2.832-2.807-8.182 8.179-8.176-8.179-2.81 2.81 8.186 8.196-8.186 8.184 2.81 2.81 8.203-8.192 8.18 8.192z"/></svg>                    </td>
+                    </td>
+                    <td class="px-6 align-middle py-3 text-xs whitespace-nowrap font-semibold text-left text-gray-500" sec:authorize="hasAuthority('ADMIN')">
+                        <!-- edit button -->
+                        <a class="text-center text-sm rounded-full px-4 py-2 mt-4 mb-2 text-white bg-gray-300 border-1 shadow-lg hover:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-purple-600"
+                           th:href="@{/students/edit/(id=${student.id}, search=${search}, page=${currentPage})}">
+                            Edit
+                        </a>
+                        <!-- delete button -->
+                        <a class="text-center text-sm rounded-full ml-2 px-4 py-2 mt-4 mb-2 text-white bg-red-500 border-0 shadow-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600"
+                           style="cursor:pointer;" th:data-student-id="${student.id}"
+                           id="delete-student-button">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center">
+            <div class="flex items-start justify-center px-4 py-3 bg-white border-t border-gray-200 sm:px-6">
+                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                    <div>
+                        <nav class="relative z-0 inline-flex shadow-sm">
+                            <a th:disabled="${!hasPrev}" th:href="@{/students(page=${hasPrev? currentPage - 1 : 0}, search=${search})}"
+                               class="relative inline-flex items-center px-2 py-2 text-sm font-medium leading-5 text-gray-500 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-l-md hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500"
+                               aria-label="Previous">
+                                <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                          d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                          clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                            <a th:each="page, status : ${totalPages}" th:text="${status.index}" th:class="${status.index == currentPage?
+                                        'relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-purple-500 border border-gray-300 hover:text-white focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 bg-purple-500' :
+                                        'relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium leading-5 text-black transition duration-150 ease-in-out bg-white border border-gray-300 hover:text-purple-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700'}"
+                               th:href="@{/students(page=${status.index}, search=${search})}"></a>
+                            <a th:disabled="${!hasNext}" th:href="@{/students(page=${hasNext? currentPage + 1 : currentPage}, search=${search})}"
+                               class="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium leading-5 text-gray-500 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-r-md hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500"
+                               aria-label="Next">
+                                <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                          clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div layout:fragment="scripts">
+<script>
+    // wait for the DOM to be loaded
+    document.addEventListener('DOMContentLoaded', function () {
+
+        // select all the delete buttons
+        document.querySelectorAll("#delete-student-button").forEach(el => {
+
+            // attach a listener to the delete button
+            el.addEventListener('click', function (e) {
+                e.preventDefault();
+                let id = e.target.getAttribute("data-student-id");
+                if (confirm("Are you sure you want to delete this student?")) {
+                    // send DELETE request
+                    fetch('/students/delete/' + id, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(response => {
+                        if (response.status === 200) {
+                            // reload the table
+                            window.location.reload();
+                        } else {
+                            alert("Something went wrong");
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
+</div>
+</body>
+</html>

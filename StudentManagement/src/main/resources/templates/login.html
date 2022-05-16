@@ -1,0 +1,34 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="base"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<main class="container mx-auto px-4 py-8 mt-8 bg-white rounded" layout:fragment="content">
+    <div class="bg-purple-400 flex justify-center items-center rounded-xl" style="min-height: 75vh;">
+
+        <form method="post" th:action="@{/sys/login}">
+            <div class="py-12 px-12 bg-white rounded-2xl shadow-xl z-20">
+                <div>
+                    <h1 class="text-3xl font-bold text-center mb-4 cursor-pointer">Login</h1>
+                    <span class="text-red-500 text-sm italic" th:if="${error}">
+                        <span th:text="${error}"></span>
+                    </span>
+                </div>
+                <div class="space-y-4 mt-4">
+                    <input type="text" name="username" placeholder="Username" class="block text-sm py-3 px-4 rounded-lg w-full border outline-none" />
+                    <input type="password" name="password" placeholder="Password" class="block text-sm py-3 px-4 rounded-lg w-full border outline-none" />
+                </div>
+                <div class="text-center mt-6">
+                    <button class="py-3 w-64 text-xl text-white bg-purple-600 rounded-2xl">Login</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</main>
+</body>
+</html>
