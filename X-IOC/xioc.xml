@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbeans>
+    <xbean id="userRepo" className="xml.user.repositories.UserRepositoryImpl"/>
+    <xbean id="service" className="xml.user.services.UserService">
+        <xproperty name="userRepository" ref="userRepo"/>
+    </xbean>
+</xbeans>
