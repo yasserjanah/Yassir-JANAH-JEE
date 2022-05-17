@@ -22,7 +22,7 @@
     </tr>
     <tr>
         <td>3</td>
-        <td>Activité Pratique N°2 - JPA, Hibernate et Spring Data</td>
+        <td>TP2: Activité Pratique N°2 - JPA, Hibernate et Spring Data</td>
         <td>
             <a href="https://github.com/yasserjanah/Yassir-JANAH-JEE/tree/main/TP2">🌐</a>
         </td>
